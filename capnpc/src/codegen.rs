@@ -57,13 +57,13 @@ impl <'a> GeneratorContext<'a> {
             for import in imports.iter() {
                 let importpath = ::std::path::Path::new(try!(import.get_name()));
                 let root_name: String = format!(
-                    "::{}_capnp",
+                    "crate::{}_capnp",
                     try!(path_to_stem_string(importpath)).replace("-", "_"));
                 try!(populate_scope_map(&gen.node_map, &mut gen.scope_map, vec!(root_name), import.get_id()));
             }
 
             let root_name = try!(path_to_stem_string(try!(requested_file.get_filename())));
-            let root_mod = format!("::{}_capnp", root_name.replace("-", "_"));
+            let root_mod = format!("crate::{}_capnp", root_name.replace("-", "_"));
             try!(populate_scope_map(&gen.node_map, &mut gen.scope_map, vec!(root_mod), id));
         }
         Ok(gen)
